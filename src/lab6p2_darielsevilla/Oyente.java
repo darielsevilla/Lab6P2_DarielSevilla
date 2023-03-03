@@ -54,7 +54,7 @@ public class Oyente extends Usuario{
 
     @Override
     public void setEdad(int edad) throws Exception {
-        if(edad > 12){
+        if(edad >= 12){
             this.edad = edad;
         }else{
             throw new Exception("Edad debe ser mayor a 12");

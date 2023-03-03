@@ -26,6 +26,19 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        wd_Artista = new javax.swing.JFrame();
+        pn_Artista = new javax.swing.JPanel();
+        lb_nombreArtista = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        mb_menu = new javax.swing.JMenuBar();
+        mi_crudUsuarios = new javax.swing.JMenu();
+        mi_crudCanciones = new javax.swing.JMenu();
+        mi_crudLanzamiento = new javax.swing.JMenu();
+        mi_crudListaReproduccion = new javax.swing.JMenu();
+        wd_Cliente = new javax.swing.JFrame();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -34,6 +47,64 @@ public class Menu extends javax.swing.JFrame {
         bt_logIn = new javax.swing.JButton();
         bt_logIn1 = new javax.swing.JButton();
         bt_logIn2 = new javax.swing.JButton();
+
+        pn_Artista.setBackground(new java.awt.Color(0, 0, 0));
+        pn_Artista.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_nombreArtista.setBackground(new java.awt.Color(0, 204, 0));
+        lb_nombreArtista.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lb_nombreArtista.setForeground(new java.awt.Color(0, 204, 0));
+        lb_nombreArtista.setText("Artista");
+        pn_Artista.add(lb_nombreArtista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 86, 39));
+
+        jTree1.setBackground(new java.awt.Color(255, 255, 255));
+        jTree1.setForeground(new java.awt.Color(0, 0, 0));
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Lanzamientos");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane2.setViewportView(jTree1);
+
+        pn_Artista.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 436, -1));
+
+        mi_crudUsuarios.setText("Usuarios");
+        mb_menu.add(mi_crudUsuarios);
+
+        mi_crudCanciones.setText("Canciones");
+        mb_menu.add(mi_crudCanciones);
+
+        mi_crudLanzamiento.setText("Lanzamientos");
+        mb_menu.add(mi_crudLanzamiento);
+
+        mi_crudListaReproduccion.setText("Listas de Reproduccion");
+        mb_menu.add(mi_crudListaReproduccion);
+
+        wd_Artista.setJMenuBar(mb_menu);
+
+        javax.swing.GroupLayout wd_ArtistaLayout = new javax.swing.GroupLayout(wd_Artista.getContentPane());
+        wd_Artista.getContentPane().setLayout(wd_ArtistaLayout);
+        wd_ArtistaLayout.setHorizontalGroup(
+            wd_ArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_Artista, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        wd_ArtistaLayout.setVerticalGroup(
+            wd_ArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_Artista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout wd_ClienteLayout = new javax.swing.GroupLayout(wd_Cliente.getContentPane());
+        wd_Cliente.getContentPane().setLayout(wd_ClienteLayout);
+        wd_ClienteLayout.setHorizontalGroup(
+            wd_ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        wd_ClienteLayout.setVerticalGroup(
+            wd_ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,8 +199,21 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton bt_logIn2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree jTree1;
+    private javax.swing.JLabel lb_nombreArtista;
+    private javax.swing.JMenuBar mb_menu;
+    private javax.swing.JMenu mi_crudCanciones;
+    private javax.swing.JMenu mi_crudLanzamiento;
+    private javax.swing.JMenu mi_crudListaReproduccion;
+    private javax.swing.JMenu mi_crudUsuarios;
     private javax.swing.JPasswordField pf_password;
+    private javax.swing.JPanel pn_Artista;
     private javax.swing.JTextField tf_nombreUsuario;
+    private javax.swing.JFrame wd_Artista;
+    private javax.swing.JFrame wd_Cliente;
     // End of variables declaration                   
 }

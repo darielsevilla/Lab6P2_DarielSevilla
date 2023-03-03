@@ -11,12 +11,12 @@ package lab6p2_darielsevilla;
 public class Cancion {
     private String titulo;
     private int tiempo;
-    private Album albumPerteneciente;
+    private int albumPerteneciente;
 
     public Cancion() {
     }
 
-    public Cancion(String titulo, int tiempo, Album albumPerteneciente) {
+    public Cancion(String titulo, int tiempo,  int albumPerteneciente) {
         this.titulo = titulo;
         this.tiempo = tiempo;
         this.albumPerteneciente = albumPerteneciente;
@@ -38,17 +38,17 @@ public class Cancion {
         this.tiempo = tiempo;
     }
 
-    public Album getAlbumPerteneciente() {
+    public int getAlbumPerteneciente() {
         return albumPerteneciente;
     }
 
-    public void setAlbumPerteneciente(Album albumPerteneciente) {
+    public void setAlbumPerteneciente(int albumPerteneciente) {
         this.albumPerteneciente = albumPerteneciente;
     }
 
     @Override
     public String toString() {
-        return titulo + " - " + tiempo + " : " + albumPerteneciente.getTitulo();
+        return titulo + " - " + tiempo + " : " + albumPerteneciente;
     }
     
     

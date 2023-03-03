@@ -14,6 +14,7 @@ public class ListaDeReproduccion {
     private String nombre;
     private int conteoLikes;
     private ArrayList<Cancion> canciones = new ArrayList();
+    private String usuario;
 
     public ListaDeReproduccion() {
     }
@@ -23,6 +24,15 @@ public class ListaDeReproduccion {
         this.conteoLikes = conteoLikes;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }

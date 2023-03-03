@@ -51,7 +51,7 @@ public class Artista extends Usuario{
 
     @Override
     public void setEdad(int edad) throws Exception {
-        if(edad > 18){
+        if(edad >= 18){
             this.edad = edad;
         }else{
             throw new Exception("Ingrese edad valida");
