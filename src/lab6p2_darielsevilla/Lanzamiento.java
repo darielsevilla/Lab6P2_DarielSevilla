@@ -14,16 +14,27 @@ public class Lanzamiento {
     protected String titulo;
     protected Date fechaLanzamiento;
     protected int conteoLikes;
+    protected int id;
 
     public Lanzamiento() {
     }
 
-    public Lanzamiento(String titulo, Date fechaLanzamiento, int conteoLikes) {
+    public Lanzamiento(String titulo, Date fechaLanzamiento, int conteoLikes, int id) {
         this.titulo = titulo;
         this.fechaLanzamiento = fechaLanzamiento;
         this.conteoLikes = conteoLikes;
+        this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     public String getTitulo() {
         return titulo;
     }

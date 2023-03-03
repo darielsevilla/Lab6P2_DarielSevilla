@@ -4,6 +4,8 @@
  */
 package lab6p2_darielsevilla;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author HP
@@ -12,6 +14,7 @@ public class Cancion {
     private String titulo;
     private int tiempo;
     private int albumPerteneciente;
+    private ArrayList<Integer> playlists = new ArrayList();
 
     public Cancion() {
     }
@@ -46,10 +49,20 @@ public class Cancion {
         this.albumPerteneciente = albumPerteneciente;
     }
 
+    public ArrayList<Integer> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(ArrayList<Integer> playlists) {
+        this.playlists = playlists;
+    }
+
+    
     @Override
     public String toString() {
         return titulo + " - " + tiempo + " : " + albumPerteneciente;
     }
+    
     
     
 }

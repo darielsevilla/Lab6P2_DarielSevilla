@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ public class Administrador {
     private File fLanzamientos;
     private File fCanciones;
     private File fListaReproduccion;
+    private File bitacora;
 
     private ArrayList<Usuario> usuarios = new ArrayList();
     private ArrayList<Lanzamiento> lanzamientos = new ArrayList();
@@ -33,11 +36,12 @@ public class Administrador {
     public Administrador() {
     }
 
-    public Administrador(String d, String d2, String d3, String d4) {
+    public Administrador(String d, String d2, String d3, String d4, String d5) {
         fUsuarios = new File(d);
         fLanzamientos = new File(d2);
         fCanciones = new File(d3);
         fListaReproduccion = new File(d4);
+        bitacora = new File(d5);
     }
 
     public File getfUsuarios() {
@@ -112,12 +116,86 @@ public class Administrador {
             Scanner lea3 = new Scanner(fCanciones);
             Scanner lea4 = new Scanner(fListaReproduccion);
 
-            //username-password-edad-
+            //usuarios
             while (lea1.hasNextLine()) {
-
+                  String temp = lea1.nextLine();
+                  String[] array =temp.split("-");
+                  
+                  if(array.length == 3){
+                 
+                      Oyente e = new Oyente(array[0], Float.parseFloat(array[1]),Integer.parseInt(array[2]));
+                      
+                      usuarios.add(e);
+                  }else{
+                      Artista e = new Artista(array[0], Float.parseFloat(array[1]),Integer.parseInt(array[2]), array[3]);
+                      usuarios.add(e);
+                  }
             }
+            
+            //Listas
+            while(lea4.hasNextLine()){
+                String temp = lea4.nextLine();
+                String[] array = temp.split("-");
+                
+                listas.add(new ListaDeReproduccion(array[0], Integer.parseInt(array[1])));
+            }
+            
+            
+            
+            //Lanzamiento
+            while(lea2.hasNextLine()){
+                String temp = lea2.nextLine();
+                String[] array = temp.split("-");
+           
+                if(array.length == 5){
+                    Album a = new Album(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]));
+                    a.setConteoLikes(Integer.parseInt(array[4]));
+                    lanzamientos.add(a);
+                }else{
+                    Single a = new Single(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]));
+                    lanzamientos.add(a);
+
+                }
+                
+            }
+            
+            //canciones
+            while(lea3.hasNextLine()){
+                String temp = lea3.nextLine();
+                String[] array = temp.split("-");
+                
+                Cancion c = new Cancion(array[0], Integer.parseInt(array[1]), Integer.parseInt(array[2]));
+                
+                String[] arr2 = array[3].split(",");
+                
+                for (String string : arr2) {
+                    c.getPlaylists().add(Integer.parseInt(string));
+                    for (ListaDeReproduccion l : listas) {
+                        if(l.getId() == Integer.parseInt(string)){
+                            l.getCanciones().add(c);
+                        }
+                    }
+                }
+                for (Lanzamiento l : lanzamientos) {
+                    if(l.getId() == c.getAlbumPerteneciente()){
+                        if(l instanceof Album){
+                           ((Album) l).getCanciones().add(c);
+                        }else{
+                        ((Single) l).setCancion(c);
+                    }
+                    }
+                }
+                canciones.add(c);
+            }
+            
+            lea1.close();
+            lea2.close();
+            lea3.close();
+            lea4.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e){
+            
         }
 
     }
@@ -148,25 +226,76 @@ public class Administrador {
             BufferedWriter bw = new BufferedWriter(escriba);
             
             for (Cancion c : canciones) {
-                bw.write(c.getTitulo() + "-" + c.getTiempo() + "-" + c.getAlbumPerteneciente());
+                bw.write(c.getTitulo() + "-" + c.getTiempo() + "-" + c.getAlbumPerteneciente()+"-");
+                for (int a : c.getPlaylists()) {
+                    bw.write(Integer.toString(a));
+                    if(c.getPlaylists().indexOf(a) != c.getPlaylists().size()-1){
+                        bw.write(",");
+                    }
+                }
+                bw.write("\n");
             }
+            bw.flush();
+            bw.close();
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
          
     }
 
-    public void writeAlbums(BufferedWriter bw, ArrayList<Album> albumes) {
-        for (Album c : albumes) {
-            try {
-                bw.write(c.getTitulo() + ",");
-                writeSongs(bw, c.getCanciones());
-                bw.write(c.getCantidadCanciones() + ",");
-                bw.write(c.getConteoLikes());
-            } catch (IOException ex) {
-                Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+   public void writeLanzamientos(){
+        try {
+            FileWriter escriba = new FileWriter(fLanzamientos);
+            BufferedWriter bw = new BufferedWriter(escriba);
+            
+            for (Lanzamiento l : lanzamientos) {
+                bw.write(l.getTitulo() + "-" + l.getId() + "-" + l.getConteoLikes() + "-" + l.getFechaLanzamiento());
+                
+                if(l instanceof Album){
+                    bw.write(((Album) l).getCantidadCanciones());
+                }
+                bw.write("\n");
             }
-
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+   }
+   
+   public void writeListas(){
+        try {
+            FileWriter escriba = new FileWriter(fListaReproduccion);
+            BufferedWriter bw = new BufferedWriter(escriba);
+            for (ListaDeReproduccion r: listas) {
+                bw.write(r.getNombre() + "-" + r.getConteoLikes() + "-" + r.getUsuario() + "-" + r.getId());
+                bw.write("\n");
+            }
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+   
+   public void writeBitacora(Usuario user){
+        try {
+            FileWriter escriba = new FileWriter(bitacora);
+            BufferedWriter bw = new BufferedWriter(escriba);
+            bw.write(user.getUsername() + "-" );
+            if(user instanceof Oyente){
+                bw.write("Oyente-");
+            }else{
+                 bw.write("Artista-");
+            }
+            Date d = new Date();
+            bw.write(d.toString());
+            bw.write("\n");
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+           
 }

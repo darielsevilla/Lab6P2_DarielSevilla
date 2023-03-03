@@ -15,15 +15,15 @@ public class Album extends Lanzamiento {
 
     private ArrayList<Cancion> canciones = new ArrayList();
     private int cantidadCanciones = 0;
-    private int id = 0;
+  
 
     public Album() {
         super();
     }
 
     public Album(String titulo, Date fechaLanzamiento, int conteoLikes, int id) {
-        super(titulo, fechaLanzamiento, conteoLikes);
-        this.id = id;
+        super(titulo, fechaLanzamiento, conteoLikes, id);
+      
     }
 
     public void addCancion(Cancion c) {
@@ -57,7 +57,7 @@ public class Album extends Lanzamiento {
 
     @Override
     public String toString() {
-        return super.toString() +":" + id +  ":" +cantidadCanciones + " canciones ";
+        return super.toString() +":" +  ":" +cantidadCanciones + " canciones ";
     }
 
     
