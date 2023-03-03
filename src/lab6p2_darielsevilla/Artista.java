@@ -19,7 +19,7 @@ public class Artista extends Usuario{
         super();
     }
 
-    public Artista(String username, float password, int edad, String nombreArtistico) throws Exception {
+    public Artista(String username, String password, int edad, String nombreArtistico) throws Exception {
         super(username, password);
         this.nombreArtistico = nombreArtistico;
         setEdad(edad);

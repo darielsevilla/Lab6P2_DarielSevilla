@@ -4,17 +4,27 @@
  */
 package lab6p2_darielsevilla;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author HP
  */
 public class Menu extends javax.swing.JFrame {
 
+    private Administrador administrador;
+    private Usuario actual = new Artista();
+
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        administrador = new Administrador("./usuarios.txt", "./lanzamientos.txt", "./canciones.txt", "./listas.txt", "./bitacora.txt");
+        administrador.cargarArchivos();
     }
 
     /**
@@ -33,20 +43,40 @@ public class Menu extends javax.swing.JFrame {
         jTree1 = new javax.swing.JTree();
         mb_menu = new javax.swing.JMenuBar();
         mi_crudUsuarios = new javax.swing.JMenu();
+        mmi_listEliminar = new javax.swing.JMenuItem();
+        mmi_modificar = new javax.swing.JMenuItem();
         mi_crudCanciones = new javax.swing.JMenu();
         mi_crudLanzamiento = new javax.swing.JMenu();
         mi_crudListaReproduccion = new javax.swing.JMenu();
         wd_Cliente = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        jd_register = new javax.swing.JDialog();
+        pn_register = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        tf_pass = new javax.swing.JTextField();
+        tf_artName = new javax.swing.JTextField();
+        tf_usuario = new javax.swing.JTextField();
+        sp_edad = new javax.swing.JSpinner();
+        jButton1 = new javax.swing.JButton();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jd_listar = new javax.swing.JDialog();
+        pn_listar = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jl_listar = new javax.swing.JList<>();
+        eliminar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        pn_login = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_nombreUsuario = new javax.swing.JTextField();
         pf_password = new javax.swing.JPasswordField();
         bt_logIn = new javax.swing.JButton();
         bt_logIn1 = new javax.swing.JButton();
-        bt_logIn2 = new javax.swing.JButton();
 
         pn_Artista.setBackground(new java.awt.Color(0, 0, 0));
         pn_Artista.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -66,6 +96,18 @@ public class Menu extends javax.swing.JFrame {
         pn_Artista.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 436, -1));
 
         mi_crudUsuarios.setText("Usuarios");
+
+        mmi_listEliminar.setText("Listar");
+        mmi_listEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmi_listEliminarActionPerformed(evt);
+            }
+        });
+        mi_crudUsuarios.add(mmi_listEliminar);
+
+        mmi_modificar.setText("modificar");
+        mi_crudUsuarios.add(mmi_modificar);
+
         mb_menu.add(mi_crudUsuarios);
 
         mi_crudCanciones.setText("Canciones");
@@ -87,18 +129,33 @@ public class Menu extends javax.swing.JFrame {
         );
         wd_ArtistaLayout.setVerticalGroup(
             wd_ArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_Artista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pn_Artista, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+        );
+
+        wd_Cliente.setPreferredSize(new java.awt.Dimension(602, 440));
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout wd_ClienteLayout = new javax.swing.GroupLayout(wd_Cliente.getContentPane());
         wd_Cliente.getContentPane().setLayout(wd_ClienteLayout);
         wd_ClienteLayout.setHorizontalGroup(
             wd_ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         wd_ClienteLayout.setVerticalGroup(
             wd_ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jRadioButtonMenuItem1.setSelected(true);
@@ -106,58 +163,261 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
+        pn_register.setBackground(new java.awt.Color(0, 0, 0));
+        pn_register.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel3.setText("Usuario:");
+        pn_register.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 81, -1, -1));
+
+        jLabel4.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel4.setText("Contraseña:");
+        pn_register.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 125, -1, -1));
+
+        jLabel5.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel5.setText("Es artista? Ingrese nombre Artistico:");
+        pn_register.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+
+        jLabel6.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel6.setText("Edad:");
+        pn_register.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 159, -1, -1));
+
+        tf_pass.setBackground(new java.awt.Color(255, 255, 255));
+        pn_register.add(tf_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 340, -1));
+
+        tf_artName.setBackground(new java.awt.Color(255, 255, 255));
+        pn_register.add(tf_artName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 340, -1));
+
+        tf_usuario.setBackground(new java.awt.Color(255, 255, 255));
+        pn_register.add(tf_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 340, -1));
+
+        sp_edad.setValue(12);
+        pn_register.add(sp_edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(0, 204, 0));
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setText("crear");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        pn_register.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
+
+        javax.swing.GroupLayout jd_registerLayout = new javax.swing.GroupLayout(jd_register.getContentPane());
+        jd_register.getContentPane().setLayout(jd_registerLayout);
+        jd_registerLayout.setHorizontalGroup(
+            jd_registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_registerLayout.setVerticalGroup(
+            jd_registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pn_listar.setBackground(new java.awt.Color(0, 0, 0));
+        pn_listar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jl_listar.setBackground(new java.awt.Color(255, 255, 255));
+        jl_listar.setModel(new DefaultListModel());
+        jScrollPane1.setViewportView(jl_listar);
+
+        pn_listar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 240, 279));
+
+        eliminar.setBackground(new java.awt.Color(255, 0, 0));
+        eliminar.setForeground(new java.awt.Color(0, 0, 0));
+        eliminar.setText("Eliminar");
+        eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarMouseClicked(evt);
+            }
+        });
+        pn_listar.add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, -1));
+
+        jButton3.setBackground(new java.awt.Color(0, 204, 0));
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
+        jButton3.setText("Regresar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        pn_listar.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, -1, -1));
+
+        javax.swing.GroupLayout jd_listarLayout = new javax.swing.GroupLayout(jd_listar.getContentPane());
+        jd_listar.getContentPane().setLayout(jd_listarLayout);
+        jd_listarLayout.setHorizontalGroup(
+            jd_listarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_listar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_listarLayout.setVerticalGroup(
+            jd_listarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_listar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pn_login.setBackground(new java.awt.Color(0, 0, 0));
+        pn_login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("SPOTIFY");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 14, -1, -1));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 114, -1, -1));
+        pn_login.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 14, -1, -1));
+        pn_login.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 114, -1, -1));
 
         tf_nombreUsuario.setBackground(new java.awt.Color(255, 255, 255));
         tf_nombreUsuario.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(tf_nombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 305, -1));
+        pn_login.add(tf_nombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 305, -1));
 
         pf_password.setBackground(new java.awt.Color(255, 255, 255));
         pf_password.setForeground(new java.awt.Color(0, 0, 0));
-        pf_password.setText("jPasswordField1");
-        jPanel1.add(pf_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 300, -1));
+        pn_login.add(pf_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 300, -1));
 
         bt_logIn.setBackground(new java.awt.Color(0, 204, 0));
         bt_logIn.setForeground(new java.awt.Color(0, 0, 0));
         bt_logIn.setText("Register");
         bt_logIn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(bt_logIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 100, 30));
+        bt_logIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_logInMouseClicked(evt);
+            }
+        });
+        pn_login.add(bt_logIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 100, 30));
 
         bt_logIn1.setBackground(new java.awt.Color(0, 204, 0));
         bt_logIn1.setForeground(new java.awt.Color(0, 0, 0));
         bt_logIn1.setText("Log in");
         bt_logIn1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(bt_logIn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 100, 30));
-
-        bt_logIn2.setBackground(new java.awt.Color(0, 0, 153));
-        bt_logIn2.setText("Log in");
-        bt_logIn2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(bt_logIn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 100, 30));
+        bt_logIn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_logIn1MouseClicked(evt);
+            }
+        });
+        pn_login.add(bt_logIn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 100, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+            .addComponent(pn_login, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pn_login, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>                        
 
+    private void bt_logIn1MouseClicked(java.awt.event.MouseEvent evt) {                                       
+        String usuario = tf_nombreUsuario.getText();
+        String password = pf_password.getText();
+        int cont = 0;
+        boolean worked = false;
+        for (Usuario u : administrador.getUsuarios()) {
+            if (usuario.equals(u.getUsername())) {
+                cont++;
+                if (password.equals(u.getPassword())) {
+                    actual = u;
+                    worked = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Password incorrecta");
+                }
+            }
+        }
+
+        if (cont == 0) {
+            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+        }
+        if(worked){
+            if(actual instanceof Oyente){
+                iniciarVentanaCliente();
+            }
+        }
+    }                                      
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
+        int x = 0;
+        for (Usuario u : administrador.getUsuarios()) {
+            if (u.getUsername().equals(tf_usuario.getText())) {
+                x++;
+                break;
+            }
+        }
+        if (x == 0) {
+            if (!tf_artName.getText().equals("")) {
+                try {
+                    Artista temp = new Artista(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()), tf_artName.getText());
+                    administrador.getUsuarios().add(temp);
+                    administrador.writeUsuarios();
+                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
+                    jd_register.setVisible(false);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                }
+            } else {
+                try {
+                    Oyente temp = new Oyente(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()));
+                    administrador.getUsuarios().add(temp);
+                    administrador.writeUsuarios();
+                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
+                    jd_register.setVisible(false);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nombre Repetido");
+        }
+    }                                     
+
+    private void bt_logInMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        iniciarJd_register();
+    }                                     
+
+    private void mmi_listEliminarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+       DefaultListModel m = (DefaultListModel) jl_listar.getModel();
+        for (Usuario a : administrador.getUsuarios()) {
+            m.addElement(a);
+        }
+    }                                                
+
+    private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        if(jl_listar.getSelectedIndex() != -1){
+            
+        }     
+        this.setVisible(true);
+    }                                     
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
+        // TODO add your handling code here:
+    }                                     
+
+    public void iniciarJd_register() {
+        jd_register.pack();
+        tf_usuario.setText("");
+        tf_pass.setText("");
+        tf_artName.setText(null);
+        sp_edad.setValue(12);
+        jd_register.setModal(true);
+        jd_register.setLocationRelativeTo(this);
+        jd_register.setVisible(true);
+    }
+
+    public void iniciar jd_listar(){
+        
+    }
+    public void iniciarVentanaCliente(){
+        wd_Cliente.setJMenuBar(mb_menu);
+        wd_Cliente.pack();
+        this.setVisible(false);
+        wd_Cliente.setLocationRelativeTo(null);
+        wd_Cliente.setVisible(true);
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -196,23 +456,43 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JButton bt_logIn;
     private javax.swing.JButton bt_logIn1;
-    private javax.swing.JButton bt_logIn2;
+    private javax.swing.JButton eliminar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jTree1;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
+    private javax.swing.JDialog jd_listar;
+    private javax.swing.JDialog jd_register;
+    private javax.swing.JList<String> jl_listar;
     private javax.swing.JLabel lb_nombreArtista;
     private javax.swing.JMenuBar mb_menu;
     private javax.swing.JMenu mi_crudCanciones;
     private javax.swing.JMenu mi_crudLanzamiento;
     private javax.swing.JMenu mi_crudListaReproduccion;
     private javax.swing.JMenu mi_crudUsuarios;
+    private javax.swing.JMenuItem mmi_listEliminar;
+    private javax.swing.JMenuItem mmi_modificar;
     private javax.swing.JPasswordField pf_password;
     private javax.swing.JPanel pn_Artista;
+    private javax.swing.JPanel pn_listar;
+    private javax.swing.JPanel pn_login;
+    private javax.swing.JPanel pn_register;
+    private javax.swing.JSpinner sp_edad;
+    private javax.swing.JTextField tf_artName;
     private javax.swing.JTextField tf_nombreUsuario;
+    private javax.swing.JTextField tf_pass;
+    private javax.swing.JTextField tf_usuario;
     private javax.swing.JFrame wd_Artista;
     private javax.swing.JFrame wd_Cliente;
     // End of variables declaration                   

@@ -10,19 +10,19 @@ package lab6p2_darielsevilla;
  */
 public abstract class Usuario {
     protected String username;
-    protected float password;
+    protected String password;
     protected int edad;
 
     public Usuario() {
     }
 
-    public Usuario(String username, float password, int edad) {
+    public Usuario(String username, String password, int edad) {
         this.username = username;
         this.password = password;
         this.edad = edad;
     }
 
-    public Usuario(String username, float password) {
+    public Usuario(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -36,11 +36,11 @@ public abstract class Usuario {
         this.username = username;
     }
 
-    public float getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(float password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

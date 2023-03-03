@@ -123,11 +123,11 @@ public class Administrador {
                   
                   if(array.length == 3){
                  
-                      Oyente e = new Oyente(array[0], Float.parseFloat(array[1]),Integer.parseInt(array[2]));
+                      Oyente e = new Oyente(array[0], array[1],Integer.parseInt(array[2]));
                       
                       usuarios.add(e);
                   }else{
-                      Artista e = new Artista(array[0], Float.parseFloat(array[1]),Integer.parseInt(array[2]), array[3]);
+                      Artista e = new Artista(array[0], array[1],Integer.parseInt(array[2]), array[3]);
                       usuarios.add(e);
                   }
             }
@@ -214,6 +214,8 @@ public class Administrador {
                 }
                 bw.write("\n");
             }
+            bw.flush();
+            bw.close();
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }

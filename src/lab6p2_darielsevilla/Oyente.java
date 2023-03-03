@@ -19,7 +19,7 @@ public class Oyente extends Usuario{
         super();
     }
 
-    public Oyente(String username, float password, int edad) throws Exception {
+    public Oyente(String username, String password, int edad) throws Exception {
         super(username, password);
         setEdad(edad);
     }
