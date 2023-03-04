@@ -29,6 +29,8 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         administrador = new Administrador("./usuarios.txt", "./lanzamientos.txt", "./canciones.txt", "./listas.txt", "./bitacora.txt");
         administrador.cargarArchivos();
+        
+        
     }
 
     /**
@@ -391,6 +393,7 @@ public class Menu extends javax.swing.JFrame {
         dc_lanzamiento.setBackground(new java.awt.Color(255, 255, 255));
 
         bt_nuevaCancion.setBackground(new java.awt.Color(51, 153, 0));
+        bt_nuevaCancion.setForeground(new java.awt.Color(0, 0, 0));
         bt_nuevaCancion.setText("crear cancion");
         bt_nuevaCancion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -690,23 +693,23 @@ public class Menu extends javax.swing.JFrame {
     }                                                    
 
     private void bt_newSongMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        boolean valid = true;
-        while (valid) {
-            try {
-                Cancion c = new Cancion(tf_titulo.getText(), Integer.parseInt(tf_tiempo.getText()), referencia);
-                administrador.getCanciones().add(c);
-                administrador.writeCanciones();
 
-                valid = false;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(wd_Artista, "Ingrese valor valido");
+        try {
+            Cancion c = new Cancion(tf_titulo.getText(), Integer.parseInt(tf_tiempo.getText()), referencia);
+            administrador.getCanciones().add(c);
+            administrador.writeCanciones();
+
+            jd_crearCancion.setVisible(false);
+            cuantasCanciones--;
+            if (cuantasCanciones > 0) {
+                
+                iniciarCrearCancion();
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(wd_Artista, "Ingrese valor valido");
         }
 
-        jd_crearCancion.setVisible(false);
-        if (cuantasCanciones != 0) {
-            iniciarCrearCancion();
-        }
+
     }                                       
 
     private void mmi_createSingleActionPerformed(java.awt.event.ActionEvent evt) {                                                 
@@ -720,50 +723,52 @@ public class Menu extends javax.swing.JFrame {
     }                                             
 
     private void bt_crearLanzamientoMouseClicked(java.awt.event.MouseEvent evt) {                                                 
-        boolean valid = true;
-        while (valid) {
-            try {
-                referencia = Integer.parseInt(tf_lanzaId.getText());
-                System.out.println(referencia);
-                for (Lanzamiento l : administrador.getLanzamientos()) {
-                    if (l.getId() == referencia) {
-                        throw new Exception("Valor repetido");
-                    }
-                }
 
-                if (cualCrear == 1) {
-                    Single temp = new Single(tf_titulo.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
-                    for (Cancion c : administrador.getCanciones()) {
-                        if (c.getAlbumPerteneciente() == temp.getId()) {
-                            temp.setCancion(c);
-                        }
-                        administrador.getLanzamientos().add(temp);
-                        ((Artista) actual).getLanzamiento().add(temp);
-                        administrador.writeLanzamientos();
-                        cualCrear = 0;
-                    }
-                }else if(cualCrear == 2){
-                    Album temp = new Album(tf_titulo.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
-                    for (Cancion c : administrador.getCanciones()) {
-                        if (c.getAlbumPerteneciente() == temp.getId()) {
-                            temp.addCancion(c);
-                        }
-                        administrador.getLanzamientos().add(temp);
-                        ((Artista) actual).getLanzamiento().add(temp);
-                        administrador.writeLanzamientos();
-                        cualCrear = 0;
-                    }
+        try {
+            referencia = Integer.parseInt(tf_lanzaId.getText());
+          
+            for (Lanzamiento l : administrador.getLanzamientos()) {
+                if (l.getId() == referencia) {
+                    throw new Exception("Valor repetido");
                 }
-                valid = false;
-                resetArtistTree();
-                administrador.getLanzamientos();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(wd_Artista, "Ingrese un valor valido que no se repita");
             }
-            
-            
+
+            dc_lanzamiento.getDate();
+            if (cualCrear == 1) {
+                Single temp = new Single(tf_lanzaName.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
+                for (Cancion c : administrador.getCanciones()) {
+                    if (c.getAlbumPerteneciente() == temp.getId()) {
+                        temp.setCancion(c);
+                    }
+
+                }
+                administrador.getLanzamientos().add(temp);
+                ((Artista) actual).getLanzamiento().add(temp);
+                administrador.writeLanzamientos();
+                cualCrear = 0;
+            } else if (cualCrear == 2) {
+                Album temp = new Album(tf_lanzaName.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
+                for (Cancion c : administrador.getCanciones()) {
+                    if (c.getAlbumPerteneciente() == temp.getId()) {
+                        temp.addCancion(c);
+                    }
+                    
+                }
+                administrador.getLanzamientos().add(temp);
+                ((Artista) actual).getLanzamiento().add(temp);
+                administrador.writeLanzamientos();
+                cualCrear = 0;
+            }
+
+            resetArtistTree();
+            jd_crearSingle.setVisible(false);
+            administrador.getLanzamientos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(wd_Artista, e);
+       
         }
-        jd_crearSingle.setVisible(false);
+
+
     }                                                
 
     private void bt_nuevaCancionMouseClicked(java.awt.event.MouseEvent evt) {                                             
@@ -784,6 +789,8 @@ public class Menu extends javax.swing.JFrame {
     }                                          
 
     public void iniciarjd_crearSingle() {
+        tf_lanzaName.setText("");
+        tf_lanzaId.setText("");
         jd_crearSingle.pack();
         jd_crearSingle.setModal(true);
         jd_crearSingle.setLocationRelativeTo(wd_Artista);
@@ -791,6 +798,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void iniciarCrearCancion() {
+        tf_titulo.setText("");
+        tf_tiempo.setText("");
         jd_crearCancion.pack();
         jd_crearCancion.setModal(true);
         jd_crearCancion.setLocationRelativeTo(wd_Artista);

@@ -145,7 +145,7 @@ public class Administrador {
 
                 String temp = lea2.nextLine();
                 String[] array = temp.split("-");
-
+           
                 if (array.length == 6) {
                     Album a = new Album(array[0], new Date(array[3]), Integer.parseInt(array[2]), Integer.parseInt(array[1]), array[4]);
                    
@@ -277,7 +277,7 @@ public class Administrador {
                 bw.write(l.getTitulo() + "-" + l.getId() + "-" + l.getConteoLikes() + "-" + l.getFechaLanzamiento() + "-" + l.getCreador());
 
                 if (l instanceof Album) {
-                    bw.write(((Album) l).getCantidadCanciones());
+                    bw.write("-"+((Album) l).getCantidadCanciones());
                 }
                 bw.write("\n");
             }

@@ -37,7 +37,7 @@ public class Single extends Lanzamiento{
 
     @Override
     public String toString() {
-        return super.toString()+":"+cancion;
+        return super.toString()+":Single";
     }
     
     

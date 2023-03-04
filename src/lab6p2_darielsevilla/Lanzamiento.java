@@ -72,7 +72,7 @@ public class Lanzamiento {
 
     @Override
     public String toString() {
-        return titulo + ":" + conteoLikes + ":" + fechaLanzamiento.getYear();
+        return titulo + ":" + conteoLikes + ":" + (fechaLanzamiento.getYear()+1900);
     }
     
     
