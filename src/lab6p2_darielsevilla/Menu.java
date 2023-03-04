@@ -57,6 +57,10 @@ public class Menu extends javax.swing.JFrame {
         mmi_crearLanzamiento = new javax.swing.JMenuItem();
         wd_Cliente = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jt_listas = new javax.swing.JTree();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jl_cancionesFavoritas = new javax.swing.JList<>();
         mb_menu2 = new javax.swing.JMenuBar();
         jd_register = new javax.swing.JDialog();
         pn_register = new javax.swing.JPanel();
@@ -191,15 +195,41 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
+        jt_listas.setBackground(new java.awt.Color(255, 255, 255));
+        jt_listas.setForeground(new java.awt.Color(0, 0, 0));
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Listas de Reproduccion");
+        jt_listas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane3.setViewportView(jt_listas);
+
+        jl_cancionesFavoritas.setBackground(new java.awt.Color(255, 255, 255));
+        jl_cancionesFavoritas.setForeground(new java.awt.Color(0, 0, 0));
+        jl_cancionesFavoritas.setModel(new DefaultListModel());
+        jl_cancionesFavoritas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_cancionesFavoritasMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jl_cancionesFavoritas);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane3))
+                .addGap(36, 36, 36))
         );
 
         wd_Cliente.setJMenuBar(mb_menu2);
@@ -649,6 +679,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void mmi_listEliminarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         DefaultListModel m = (DefaultListModel) jl_listar.getModel();
+        m.clear();
         for (Usuario a : administrador.getUsuarios()) {
             m.addElement(a);
         }
@@ -663,7 +694,7 @@ public class Menu extends javax.swing.JFrame {
     }                                        
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
-        // TODO add your handling code here:
+        jd_listar.setVisible(false);
     }                                     
 
     private void mmi_EliminarActionPerformed(java.awt.event.ActionEvent evt) {                                             
@@ -788,6 +819,13 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                          
 
+    private void jl_cancionesFavoritasMouseClicked(java.awt.event.MouseEvent evt) {                                                   
+        // TODO add your handling code here:
+    }                                                  
+
+    public void resetFavoriteSongsTree(){
+       DefaultListModel m = (DefaultListModel) jl_cancionesFavoritas.getModel();
+    }
     public void iniciarjd_crearSingle() {
         tf_lanzaName.setText("");
         tf_lanzaId.setText("");
@@ -819,6 +857,13 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
+    public void resetListTree(){
+        DefaultTreeModel m = (DefaultTreeModel) jt_listas.getModel();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Listas de Reproducción");
+        m.setRoot(raiz);
+        
+    }
+    
     public void resetArtistTree() {
         DefaultTreeModel m = (DefaultTreeModel) jt_lanzamientos.getModel();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Lanzamientos");
@@ -956,12 +1001,16 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JDialog jd_crearCancion;
     private javax.swing.JDialog jd_crearSingle;
     private javax.swing.JDialog jd_listar;
     private javax.swing.JDialog jd_register;
+    private javax.swing.JList<String> jl_cancionesFavoritas;
     private javax.swing.JList<String> jl_listar;
     private javax.swing.JTree jt_lanzamientos;
+    private javax.swing.JTree jt_listas;
     private javax.swing.JLabel lb_nombreArtista;
     private javax.swing.JLabel lb_titleSingles;
     private javax.swing.JMenuBar mb_menu;
