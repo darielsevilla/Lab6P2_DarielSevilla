@@ -15,15 +15,17 @@ public class Lanzamiento {
     protected Date fechaLanzamiento;
     protected int conteoLikes;
     protected int id;
+    protected String creador;
 
     public Lanzamiento() {
     }
 
-    public Lanzamiento(String titulo, Date fechaLanzamiento, int conteoLikes, int id) {
+    public Lanzamiento(String titulo, Date fechaLanzamiento, int conteoLikes, int id, String creador) {
         this.titulo = titulo;
         this.fechaLanzamiento = fechaLanzamiento;
         this.conteoLikes = conteoLikes;
         this.id = id;
+        this.creador = creador;
     }
 
     public int getId() {
@@ -49,6 +51,14 @@ public class Lanzamiento {
 
     public void setFechaLanzamiento(Date fechaLanzamiento) {
         this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
     }
 
     public int getConteoLikes() {

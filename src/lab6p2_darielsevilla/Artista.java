@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Artista extends Usuario{
     protected String nombreArtistico;
-    protected ArrayList<Cancion> canciones = new ArrayList();
-    protected ArrayList<Album> albumes = new ArrayList();
+
+    protected ArrayList<Lanzamiento> albumes = new ArrayList();
 
     public Artista() {
         super();
@@ -29,19 +29,14 @@ public class Artista extends Usuario{
         return nombreArtistico;
     }
 
-    public ArrayList<Cancion> getCanciones() {
-        return canciones;
-    }
+ 
 
-    public void setCanciones(ArrayList<Cancion> canciones) {
-        this.canciones = canciones;
-    }
-
-    public ArrayList<Album> getAlbumes() {
+    
+    public ArrayList<Lanzamiento> getLanzamiento() {
         return albumes;
     }
 
-    public void setAlbumes(ArrayList<Album> albumes) {
+    public void setLanzamiento(ArrayList<Lanzamiento> albumes) {
         this.albumes = albumes;
     }
 

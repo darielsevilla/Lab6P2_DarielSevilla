@@ -147,13 +147,23 @@ public class Administrador {
                 String temp = lea2.nextLine();
                 String[] array = temp.split("-");
            
-                if(array.length == 5){
-                    Album a = new Album(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]));
-                    a.setConteoLikes(Integer.parseInt(array[4]));
+                if(array.length == 6){
+                    Album a = new Album(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]), array[4]);
+                    a.setConteoLikes(Integer.parseInt(array[5]));
+                    for (Usuario u : usuarios) {
+                        if(u.getUsername().equals(a.getCreador())){
+                            ((Artista)u).getLanzamiento().add(a);
+                        }
+                    }
                     lanzamientos.add(a);
                 }else{
-                    Single a = new Single(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]));
+                    Single a = new Single(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]), array[4]);
                     lanzamientos.add(a);
+                    for (Usuario u : usuarios) {
+                        if(u.getUsername().equals(a.getCreador())){
+                            ((Artista)u).getLanzamiento().add(a);
+                        }
+                    }
 
                 }
                 
@@ -251,7 +261,7 @@ public class Administrador {
             BufferedWriter bw = new BufferedWriter(escriba);
             
             for (Lanzamiento l : lanzamientos) {
-                bw.write(l.getTitulo() + "-" + l.getId() + "-" + l.getConteoLikes() + "-" + l.getFechaLanzamiento());
+                bw.write(l.getTitulo() + "-" + l.getId() + "-" + l.getConteoLikes() + "-" + l.getFechaLanzamiento() + "-" + l.getCreador());
                 
                 if(l instanceof Album){
                     bw.write(((Album) l).getCantidadCanciones());

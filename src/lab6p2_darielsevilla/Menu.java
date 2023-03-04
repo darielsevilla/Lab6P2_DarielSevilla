@@ -8,6 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -41,17 +43,17 @@ public class Menu extends javax.swing.JFrame {
         pn_Artista = new javax.swing.JPanel();
         lb_nombreArtista = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jt_lanzamientos = new javax.swing.JTree();
         mb_menu = new javax.swing.JMenuBar();
         mi_crudUsuarios = new javax.swing.JMenu();
         mmi_listEliminar = new javax.swing.JMenuItem();
         mmi_modificar = new javax.swing.JMenuItem();
         mmi_Eliminar = new javax.swing.JMenuItem();
-        mi_crudCanciones = new javax.swing.JMenu();
         mi_crudLanzamiento = new javax.swing.JMenu();
-        mi_crudListaReproduccion = new javax.swing.JMenu();
+        mmi_crearLanzamiento = new javax.swing.JMenuItem();
         wd_Cliente = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
+        mb_menu2 = new javax.swing.JMenuBar();
         jd_register = new javax.swing.JDialog();
         pn_register = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -87,11 +89,11 @@ public class Menu extends javax.swing.JFrame {
         lb_nombreArtista.setText("Artista");
         pn_Artista.add(lb_nombreArtista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 86, 39));
 
-        jTree1.setBackground(new java.awt.Color(255, 255, 255));
-        jTree1.setForeground(new java.awt.Color(0, 0, 0));
+        jt_lanzamientos.setBackground(new java.awt.Color(255, 255, 255));
+        jt_lanzamientos.setForeground(new java.awt.Color(0, 0, 0));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Lanzamientos");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane2.setViewportView(jTree1);
+        jt_lanzamientos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane2.setViewportView(jt_lanzamientos);
 
         pn_Artista.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 436, -1));
 
@@ -123,14 +125,17 @@ public class Menu extends javax.swing.JFrame {
 
         mb_menu.add(mi_crudUsuarios);
 
-        mi_crudCanciones.setText("Canciones");
-        mb_menu.add(mi_crudCanciones);
-
         mi_crudLanzamiento.setText("Lanzamientos");
-        mb_menu.add(mi_crudLanzamiento);
 
-        mi_crudListaReproduccion.setText("Listas de Reproduccion");
-        mb_menu.add(mi_crudListaReproduccion);
+        mmi_crearLanzamiento.setText("jMenuItem1");
+        mmi_crearLanzamiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmi_crearLanzamientoActionPerformed(evt);
+            }
+        });
+        mi_crudLanzamiento.add(mmi_crearLanzamiento);
+
+        mb_menu.add(mi_crudLanzamiento);
 
         wd_Artista.setJMenuBar(mb_menu);
 
@@ -157,8 +162,10 @@ public class Menu extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
+
+        wd_Cliente.setJMenuBar(mb_menu2);
 
         javax.swing.GroupLayout wd_ClienteLayout = new javax.swing.GroupLayout(wd_Cliente.getContentPane());
         wd_Cliente.getContentPane().setLayout(wd_ClienteLayout);
@@ -465,13 +472,42 @@ public class Menu extends javax.swing.JFrame {
         iniciarJd_register();
     }                                             
 
+    private void mmi_crearLanzamientoActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        
+    }                                                    
+
     public void iniciarVentanaArtista() {
         wd_Artista.pack();
         this.setVisible(false);
         wd_Artista.setLocationRelativeTo(null);
         wd_Artista.setVisible(true);
+        
+        
     }
 
+    public void resetArtistTree(){
+        DefaultTreeModel m = (DefaultTreeModel) jt_lanzamientos.getModel();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Lanzamientos");
+        m.setRoot(raiz);
+        DefaultMutableTreeNode albumes = new DefaultMutableTreeNode("Albumes");
+        DefaultMutableTreeNode singles = new DefaultMutableTreeNode("Singles");
+        raiz.add(albumes);
+        int i = 1;
+        for (Album l : ((Artista)actual).getAlbumes()) {
+            DefaultMutableTreeNode temp = new DefaultMutableTreeNode(l);
+            for (Cancion c : l.getCanciones()) {
+                temp.add(new DefaultMutableTreeNode(c));
+            }
+            albumes.add(temp);
+        }
+        
+        for (Single s : ((Artista)actual)) {
+            
+        }
+        
+        
+    }
+            
     public void iniciarJd_register() {
 
         tf_artName.setEnabled(true);
@@ -512,7 +548,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void iniciarVentanaCliente() {
-        wd_Cliente.setJMenuBar(mb_menu);
+        mb_menu2.add(mi_crudUsuarios);
         wd_Cliente.pack();
         this.setVisible(false);
         wd_Cliente.setLocationRelativeTo(null);
@@ -520,6 +556,7 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
+    
     /**
      * @param args the command line arguments
      */
@@ -570,18 +607,18 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JDialog jd_listar;
     private javax.swing.JDialog jd_register;
     private javax.swing.JList<String> jl_listar;
+    private javax.swing.JTree jt_lanzamientos;
     private javax.swing.JLabel lb_nombreArtista;
     private javax.swing.JMenuBar mb_menu;
-    private javax.swing.JMenu mi_crudCanciones;
+    private javax.swing.JMenuBar mb_menu2;
     private javax.swing.JMenu mi_crudLanzamiento;
-    private javax.swing.JMenu mi_crudListaReproduccion;
     private javax.swing.JMenu mi_crudUsuarios;
     private javax.swing.JMenuItem mmi_Eliminar;
+    private javax.swing.JMenuItem mmi_crearLanzamiento;
     private javax.swing.JMenuItem mmi_listEliminar;
     private javax.swing.JMenuItem mmi_modificar;
     private javax.swing.JPasswordField pf_password;

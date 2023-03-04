@@ -21,8 +21,8 @@ public class Album extends Lanzamiento {
         super();
     }
 
-    public Album(String titulo, Date fechaLanzamiento, int conteoLikes, int id) {
-        super(titulo, fechaLanzamiento, conteoLikes, id);
+    public Album(String titulo, Date fechaLanzamiento, int conteoLikes, int id, String creador) {
+        super(titulo, fechaLanzamiento, conteoLikes, id, creador);
       
     }
 
