@@ -4,8 +4,6 @@
  */
 package lab6p2_darielsevilla;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -20,6 +18,9 @@ public class Menu extends javax.swing.JFrame {
     private Administrador administrador;
     private Usuario actual = new Artista();
     private int modify = 0;
+    private int referencia = 0;
+    private int cualCrear = 0;
+    private int cuantasCanciones = 0;
 
     /**
      * Creates new form Menu
@@ -50,6 +51,7 @@ public class Menu extends javax.swing.JFrame {
         mmi_modificar = new javax.swing.JMenuItem();
         mmi_Eliminar = new javax.swing.JMenuItem();
         mi_crudLanzamiento = new javax.swing.JMenu();
+        mmi_createSingle = new javax.swing.JMenuItem();
         mmi_crearLanzamiento = new javax.swing.JMenuItem();
         wd_Cliente = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
@@ -65,13 +67,33 @@ public class Menu extends javax.swing.JFrame {
         tf_usuario = new javax.swing.JTextField();
         sp_edad = new javax.swing.JSpinner();
         bt_create = new javax.swing.JButton();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jd_listar = new javax.swing.JDialog();
         pn_listar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jl_listar = new javax.swing.JList<>();
         bt_eliminar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jd_crearCancion = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        lb_titleSingles = new javax.swing.JLabel();
+        tf_referencia = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        tf_titulo = new javax.swing.JTextField();
+        sp_referencia = new javax.swing.JSpinner();
+        tf_tiempo = new javax.swing.JTextField();
+        bt_newSong = new javax.swing.JButton();
+        jd_crearSingle = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        tf_lanzaId = new javax.swing.JTextField();
+        tf_lanzaName = new javax.swing.JTextField();
+        dc_lanzamiento = new com.toedter.calendar.JDateChooser();
+        bt_nuevaCancion = new javax.swing.JButton();
+        bt_crearLanzamiento = new javax.swing.JButton();
         pn_login = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -127,7 +149,20 @@ public class Menu extends javax.swing.JFrame {
 
         mi_crudLanzamiento.setText("Lanzamientos");
 
-        mmi_crearLanzamiento.setText("jMenuItem1");
+        mmi_createSingle.setText("crear Single");
+        mmi_createSingle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mmi_createSingleMouseClicked(evt);
+            }
+        });
+        mmi_createSingle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmi_createSingleActionPerformed(evt);
+            }
+        });
+        mi_crudLanzamiento.add(mmi_createSingle);
+
+        mmi_crearLanzamiento.setText("crear Album");
         mmi_crearLanzamiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mmi_crearLanzamientoActionPerformed(evt);
@@ -270,6 +305,181 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(pn_listar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_titleSingles.setBackground(new java.awt.Color(0, 204, 0));
+        lb_titleSingles.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titleSingles.setForeground(new java.awt.Color(0, 255, 0));
+        lb_titleSingles.setText("Crear cancion");
+        jPanel2.add(lb_titleSingles, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, 36));
+
+        tf_referencia.setBackground(new java.awt.Color(0, 204, 0));
+        tf_referencia.setForeground(new java.awt.Color(0, 255, 0));
+        tf_referencia.setText("Referencia:");
+        jPanel2.add(tf_referencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+
+        jLabel8.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel8.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel8.setText("Titulo:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+
+        jLabel9.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel9.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel9.setText("Tiempo de Duracion:");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        tf_titulo.setBackground(new java.awt.Color(255, 255, 255));
+        tf_titulo.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(tf_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 230, -1));
+        jPanel2.add(sp_referencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
+
+        tf_tiempo.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(tf_tiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 180, -1));
+
+        bt_newSong.setBackground(new java.awt.Color(0, 204, 0));
+        bt_newSong.setForeground(new java.awt.Color(0, 0, 0));
+        bt_newSong.setText("Crear");
+        bt_newSong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_newSongMouseClicked(evt);
+            }
+        });
+        bt_newSong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_newSongActionPerformed(evt);
+            }
+        });
+        jPanel2.add(bt_newSong, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, -1, -1));
+
+        javax.swing.GroupLayout jd_crearCancionLayout = new javax.swing.GroupLayout(jd_crearCancion.getContentPane());
+        jd_crearCancion.getContentPane().setLayout(jd_crearCancionLayout);
+        jd_crearCancionLayout.setHorizontalGroup(
+            jd_crearCancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+        );
+        jd_crearCancionLayout.setVerticalGroup(
+            jd_crearCancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel7.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel7.setText("Crear Lanzamiento");
+
+        jLabel10.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel10.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel10.setText("Titulo:");
+
+        jLabel11.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel11.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel11.setText("Id:");
+
+        jLabel12.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel12.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel12.setText("Fecha de Lanzamiento:");
+
+        tf_lanzaId.setBackground(new java.awt.Color(255, 255, 255));
+        tf_lanzaId.setForeground(new java.awt.Color(0, 0, 0));
+
+        tf_lanzaName.setBackground(new java.awt.Color(255, 255, 255));
+        tf_lanzaName.setForeground(new java.awt.Color(0, 0, 0));
+
+        dc_lanzamiento.setBackground(new java.awt.Color(255, 255, 255));
+
+        bt_nuevaCancion.setBackground(new java.awt.Color(51, 153, 0));
+        bt_nuevaCancion.setText("crear cancion");
+        bt_nuevaCancion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_nuevaCancionMouseClicked(evt);
+            }
+        });
+        bt_nuevaCancion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_nuevaCancionActionPerformed(evt);
+            }
+        });
+
+        bt_crearLanzamiento.setBackground(new java.awt.Color(51, 204, 0));
+        bt_crearLanzamiento.setForeground(new java.awt.Color(0, 0, 0));
+        bt_crearLanzamiento.setText("create");
+        bt_crearLanzamiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_crearLanzamientoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel10))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tf_lanzaId, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tf_lanzaName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(50, 50, 50)
+                                        .addComponent(dc_lanzamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(bt_nuevaCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bt_crearLanzamiento)
+                .addGap(25, 25, 25))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(tf_lanzaName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(tf_lanzaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(dc_lanzamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
+                .addComponent(bt_nuevaCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_crearLanzamiento)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_crearSingleLayout = new javax.swing.GroupLayout(jd_crearSingle.getContentPane());
+        jd_crearSingle.getContentPane().setLayout(jd_crearSingleLayout);
+        jd_crearSingleLayout.setHorizontalGroup(
+            jd_crearSingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_crearSingleLayout.setVerticalGroup(
+            jd_crearSingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pn_login.setBackground(new java.awt.Color(0, 0, 0));
@@ -361,11 +571,11 @@ public class Menu extends javax.swing.JFrame {
         for (Usuario u : administrador.getUsuarios()) {
             if (u.getUsername().equals(tf_usuario.getText()) && !u.equals(actual)) {
                 x++;
-                
+
                 break;
             }
         }
-        
+
         if (x == 0) {
             if (modify == 0) {
                 if (!tf_artName.getText().equals("")) {
@@ -374,6 +584,7 @@ public class Menu extends javax.swing.JFrame {
                         Artista temp = new Artista(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()), tf_artName.getText());
                         administrador.getUsuarios().add(temp);
                         administrador.writeUsuarios();
+                        administrador.writeBitacora(temp);
                         JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
                         jd_register.setVisible(false);
                     } catch (Exception ex) {
@@ -384,6 +595,7 @@ public class Menu extends javax.swing.JFrame {
                         Oyente temp = new Oyente(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()));
                         administrador.getUsuarios().add(temp);
                         administrador.writeUsuarios();
+                        administrador.writeBitacora(temp);
                         JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
                         jd_register.setVisible(false);
                     } catch (Exception ex) {
@@ -473,41 +685,158 @@ public class Menu extends javax.swing.JFrame {
     }                                             
 
     private void mmi_crearLanzamientoActionPerformed(java.awt.event.ActionEvent evt) {                                                     
-        
+        cualCrear = 2;
+        iniciarjd_crearSingle();
     }                                                    
+
+    private void bt_newSongMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        boolean valid = true;
+        while (valid) {
+            try {
+                Cancion c = new Cancion(tf_titulo.getText(), Integer.parseInt(tf_tiempo.getText()), referencia);
+                administrador.getCanciones().add(c);
+                administrador.writeCanciones();
+
+                valid = false;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(wd_Artista, "Ingrese valor valido");
+            }
+        }
+
+        jd_crearCancion.setVisible(false);
+        if (cuantasCanciones != 0) {
+            iniciarCrearCancion();
+        }
+    }                                       
+
+    private void mmi_createSingleActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        cualCrear = 1;
+        iniciarjd_crearSingle();
+
+    }                                                
+
+    private void mmi_createSingleMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
+
+    private void bt_crearLanzamientoMouseClicked(java.awt.event.MouseEvent evt) {                                                 
+        boolean valid = true;
+        while (valid) {
+            try {
+                referencia = Integer.parseInt(tf_lanzaId.getText());
+                System.out.println(referencia);
+                for (Lanzamiento l : administrador.getLanzamientos()) {
+                    if (l.getId() == referencia) {
+                        throw new Exception("Valor repetido");
+                    }
+                }
+
+                if (cualCrear == 1) {
+                    Single temp = new Single(tf_titulo.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
+                    for (Cancion c : administrador.getCanciones()) {
+                        if (c.getAlbumPerteneciente() == temp.getId()) {
+                            temp.setCancion(c);
+                        }
+                        administrador.getLanzamientos().add(temp);
+                        ((Artista) actual).getLanzamiento().add(temp);
+                        administrador.writeLanzamientos();
+                        cualCrear = 0;
+                    }
+                }else if(cualCrear == 2){
+                    Album temp = new Album(tf_titulo.getText(), dc_lanzamiento.getDate(), 0, referencia, actual.getUsername());
+                    for (Cancion c : administrador.getCanciones()) {
+                        if (c.getAlbumPerteneciente() == temp.getId()) {
+                            temp.addCancion(c);
+                        }
+                        administrador.getLanzamientos().add(temp);
+                        ((Artista) actual).getLanzamiento().add(temp);
+                        administrador.writeLanzamientos();
+                        cualCrear = 0;
+                    }
+                }
+                valid = false;
+                resetArtistTree();
+                administrador.getLanzamientos();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(wd_Artista, "Ingrese un valor valido que no se repita");
+            }
+            
+            
+        }
+        jd_crearSingle.setVisible(false);
+    }                                                
+
+    private void bt_nuevaCancionMouseClicked(java.awt.event.MouseEvent evt) {                                             
+        if (cualCrear == 2) {
+            cuantasCanciones = Integer.parseInt(JOptionPane.showInputDialog("Cuantas canciones agregara?"));
+        }
+        referencia = Integer.parseInt(tf_lanzaId.getText());
+        iniciarCrearCancion();
+
+    }                                            
+
+    private void bt_nuevaCancionActionPerformed(java.awt.event.ActionEvent evt) {                                                
+
+    }                                               
+
+    private void bt_newSongActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }                                          
+
+    public void iniciarjd_crearSingle() {
+        jd_crearSingle.pack();
+        jd_crearSingle.setModal(true);
+        jd_crearSingle.setLocationRelativeTo(wd_Artista);
+        jd_crearSingle.setVisible(true);
+    }
+
+    public void iniciarCrearCancion() {
+        jd_crearCancion.pack();
+        jd_crearCancion.setModal(true);
+        jd_crearCancion.setLocationRelativeTo(wd_Artista);
+        jd_crearCancion.setVisible(true);
+    }
 
     public void iniciarVentanaArtista() {
         wd_Artista.pack();
+        resetArtistTree();
+        tf_titulo.setText("");
+        tf_tiempo.setText("");
+        sp_referencia.setVisible(false);
+        tf_referencia.setVisible(false);
         this.setVisible(false);
         wd_Artista.setLocationRelativeTo(null);
         wd_Artista.setVisible(true);
-        
-        
+
     }
 
-    public void resetArtistTree(){
+    public void resetArtistTree() {
         DefaultTreeModel m = (DefaultTreeModel) jt_lanzamientos.getModel();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Lanzamientos");
         m.setRoot(raiz);
         DefaultMutableTreeNode albumes = new DefaultMutableTreeNode("Albumes");
         DefaultMutableTreeNode singles = new DefaultMutableTreeNode("Singles");
         raiz.add(albumes);
+        raiz.add(singles);
         int i = 1;
-        for (Album l : ((Artista)actual).getAlbumes()) {
-            DefaultMutableTreeNode temp = new DefaultMutableTreeNode(l);
-            for (Cancion c : l.getCanciones()) {
-                temp.add(new DefaultMutableTreeNode(c));
+        for (Lanzamiento l : ((Artista) actual).getLanzamiento()) {
+            if (l instanceof Album) {
+                DefaultMutableTreeNode temp = new DefaultMutableTreeNode(l);
+                for (Cancion c : ((Album) l).getCanciones()) {
+                    temp.add(new DefaultMutableTreeNode(c));
+                }
+                albumes.add(temp);
+            } else {
+                DefaultMutableTreeNode temp = new DefaultMutableTreeNode(l);
+
+                temp.add(new DefaultMutableTreeNode(((Single) l).getCancion()));
+                singles.add(temp);
             }
-            albumes.add(temp);
         }
-        
-        for (Single s : ((Artista)actual)) {
-            
-        }
-        
-        
+        m.reload();
+
     }
-            
+
     public void iniciarJd_register() {
 
         tf_artName.setEnabled(true);
@@ -556,7 +885,6 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-    
     /**
      * @param args the command line arguments
      */
@@ -593,32 +921,47 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    private javax.swing.JButton bt_crearLanzamiento;
     private javax.swing.JButton bt_create;
     private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_logIn;
     private javax.swing.JButton bt_logIn1;
+    private javax.swing.JButton bt_newSong;
+    private javax.swing.JButton bt_nuevaCancion;
+    private com.toedter.calendar.JDateChooser dc_lanzamiento;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
+    private javax.swing.JDialog jd_crearCancion;
+    private javax.swing.JDialog jd_crearSingle;
     private javax.swing.JDialog jd_listar;
     private javax.swing.JDialog jd_register;
     private javax.swing.JList<String> jl_listar;
     private javax.swing.JTree jt_lanzamientos;
     private javax.swing.JLabel lb_nombreArtista;
+    private javax.swing.JLabel lb_titleSingles;
     private javax.swing.JMenuBar mb_menu;
     private javax.swing.JMenuBar mb_menu2;
     private javax.swing.JMenu mi_crudLanzamiento;
     private javax.swing.JMenu mi_crudUsuarios;
     private javax.swing.JMenuItem mmi_Eliminar;
     private javax.swing.JMenuItem mmi_crearLanzamiento;
+    private javax.swing.JMenuItem mmi_createSingle;
     private javax.swing.JMenuItem mmi_listEliminar;
     private javax.swing.JMenuItem mmi_modificar;
     private javax.swing.JPasswordField pf_password;
@@ -627,9 +970,15 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel pn_login;
     private javax.swing.JPanel pn_register;
     private javax.swing.JSpinner sp_edad;
+    private javax.swing.JSpinner sp_referencia;
     private javax.swing.JTextField tf_artName;
+    private javax.swing.JTextField tf_lanzaId;
+    private javax.swing.JTextField tf_lanzaName;
     private javax.swing.JTextField tf_nombreUsuario;
     private javax.swing.JTextField tf_pass;
+    private javax.swing.JLabel tf_referencia;
+    private javax.swing.JTextField tf_tiempo;
+    private javax.swing.JTextField tf_titulo;
     private javax.swing.JTextField tf_usuario;
     private javax.swing.JFrame wd_Artista;
     private javax.swing.JFrame wd_Cliente;

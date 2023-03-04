@@ -26,6 +26,7 @@ public class Lanzamiento {
         this.conteoLikes = conteoLikes;
         this.id = id;
         this.creador = creador;
+
     }
 
     public int getId() {
@@ -71,7 +72,7 @@ public class Lanzamiento {
 
     @Override
     public String toString() {
-        return titulo + ":" + conteoLikes + ":" + fechaLanzamiento;
+        return titulo + ":" + conteoLikes + ":" + fechaLanzamiento.getYear();
     }
     
     

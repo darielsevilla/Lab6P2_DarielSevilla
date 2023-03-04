@@ -118,94 +118,106 @@ public class Administrador {
 
             //usuarios
             while (lea1.hasNextLine()) {
-                  String temp = lea1.nextLine();
-                  String[] array =temp.split("-");
-                  
-                  if(array.length == 3){
-                 
-                      Oyente e = new Oyente(array[0], array[1],Integer.parseInt(array[2]));
-                      
-                      usuarios.add(e);
-                  }else{
-                      Artista e = new Artista(array[0], array[1],Integer.parseInt(array[2]), array[3]);
-                      usuarios.add(e);
-                  }
+                String temp = lea1.nextLine();
+                String[] array = temp.split("-");
+
+                if (array.length == 3) {
+
+                    Oyente e = new Oyente(array[0], array[1], Integer.parseInt(array[2]));
+
+                    usuarios.add(e);
+                } else {
+                    Artista e = new Artista(array[0], array[1], Integer.parseInt(array[2]), array[3]);
+                    usuarios.add(e);
+                }
             }
-            
+
             //Listas
-            while(lea4.hasNextLine()){
+            while (lea4.hasNextLine()) {
                 String temp = lea4.nextLine();
                 String[] array = temp.split("-");
-                
+
                 listas.add(new ListaDeReproduccion(array[0], Integer.parseInt(array[1])));
             }
-            
-            
-            
+
             //Lanzamiento
-            while(lea2.hasNextLine()){
+            while (lea2.hasNextLine()) {
+
                 String temp = lea2.nextLine();
                 String[] array = temp.split("-");
-           
-                if(array.length == 6){
-                    Album a = new Album(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]), array[4]);
+
+                if (array.length == 6) {
+                    Album a = new Album(array[0], new Date(array[3]), Integer.parseInt(array[2]), Integer.parseInt(array[1]), array[4]);
+                   
                     a.setConteoLikes(Integer.parseInt(array[5]));
                     for (Usuario u : usuarios) {
-                        if(u.getUsername().equals(a.getCreador())){
-                            ((Artista)u).getLanzamiento().add(a);
+                        if (u.getUsername().equals(a.getCreador())) {
+                            ((Artista) u).getLanzamiento().add(a);
                         }
                     }
                     lanzamientos.add(a);
-                }else{
-                    Single a = new Single(array[0], new Date(array[1]), Integer.parseInt(array[2]), Integer.parseInt(array[3]), array[4]);
+
+                } else {
+
+                    Single a = new Single(array[0], new Date(array[3]), Integer.parseInt(array[2]), Integer.parseInt(array[1]), array[4]);
+                   
                     lanzamientos.add(a);
                     for (Usuario u : usuarios) {
-                        if(u.getUsername().equals(a.getCreador())){
-                            ((Artista)u).getLanzamiento().add(a);
+                        if (u.getUsername().equals(a.getCreador())) {
+                            ((Artista) u).getLanzamiento().add(a);
+
                         }
                     }
 
                 }
-                
+
             }
-            
+
             //canciones
-            while(lea3.hasNextLine()){
+            while (lea3.hasNextLine()) {
                 String temp = lea3.nextLine();
                 String[] array = temp.split("-");
-                
+
                 Cancion c = new Cancion(array[0], Integer.parseInt(array[1]), Integer.parseInt(array[2]));
-                
-                String[] arr2 = array[3].split(",");
-                
-                for (String string : arr2) {
-                    c.getPlaylists().add(Integer.parseInt(string));
-                    for (ListaDeReproduccion l : listas) {
-                        if(l.getId() == Integer.parseInt(string)){
-                            l.getCanciones().add(c);
+
+                if (array.length == 4) {
+                    String[] arr2 = array[3].split(",");
+
+                    for (String string : arr2) {
+                        c.getPlaylists().add(Integer.parseInt(string));
+                        for (ListaDeReproduccion l : listas) {
+                            if (l.getId() == Integer.parseInt(string)) {
+                                l.getCanciones().add(c);
+
+                            }
                         }
                     }
                 }
+              
                 for (Lanzamiento l : lanzamientos) {
-                    if(l.getId() == c.getAlbumPerteneciente()){
-                        if(l instanceof Album){
-                           ((Album) l).getCanciones().add(c);
-                        }else{
-                        ((Single) l).setCancion(c);
-                    }
+                
+                        
+                    if (l.getId() == c.getAlbumPerteneciente()) {
+                        
+                        if (l instanceof Album) {
+                            ((Album) l).addCancion(c);
+                        } else {
+                            ((Single) l).setCancion(c);
+
+                        }
                     }
                 }
                 canciones.add(c);
             }
-            
+
             lea1.close();
             lea2.close();
             lea3.close();
             lea4.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e){
-            
+        } catch (Exception e) {
+
         }
 
     }
@@ -215,12 +227,12 @@ public class Administrador {
             FileWriter escriba = new FileWriter(fUsuarios, false);
             BufferedWriter bw = new BufferedWriter(escriba);
             for (Usuario u : usuarios) {
-                
+
                 bw.write(u.getUsername() + "-" + u.getPassword() + "-" + u.getEdad());
 
                 if (u instanceof Artista) {
                     bw.write("-" + ((Artista) u).getNombreArtistico());
-                    
+
                 }
                 bw.write("\n");
             }
@@ -232,16 +244,16 @@ public class Administrador {
     }
 
     public void writeCanciones() {
-       
+
         try {
             FileWriter escriba = new FileWriter(fCanciones, false);
             BufferedWriter bw = new BufferedWriter(escriba);
-            
+
             for (Cancion c : canciones) {
-                bw.write(c.getTitulo() + "-" + c.getTiempo() + "-" + c.getAlbumPerteneciente()+"-");
+                bw.write(c.getTitulo() + "-" + c.getTiempo() + "-" + c.getAlbumPerteneciente() + "-");
                 for (int a : c.getPlaylists()) {
                     bw.write(Integer.toString(a));
-                    if(c.getPlaylists().indexOf(a) != c.getPlaylists().size()-1){
+                    if (c.getPlaylists().indexOf(a) != c.getPlaylists().size() - 1) {
                         bw.write(",");
                     }
                 }
@@ -252,18 +264,19 @@ public class Administrador {
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+
     }
 
-   public void writeLanzamientos(){
+    public void writeLanzamientos() {
         try {
             FileWriter escriba = new FileWriter(fLanzamientos);
             BufferedWriter bw = new BufferedWriter(escriba);
-            
+
             for (Lanzamiento l : lanzamientos) {
+
                 bw.write(l.getTitulo() + "-" + l.getId() + "-" + l.getConteoLikes() + "-" + l.getFechaLanzamiento() + "-" + l.getCreador());
-                
-                if(l instanceof Album){
+
+                if (l instanceof Album) {
                     bw.write(((Album) l).getCantidadCanciones());
                 }
                 bw.write("\n");
@@ -273,13 +286,13 @@ public class Administrador {
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-   }
-   
-   public void writeListas(){
+    }
+
+    public void writeListas() {
         try {
             FileWriter escriba = new FileWriter(fListaReproduccion);
             BufferedWriter bw = new BufferedWriter(escriba);
-            for (ListaDeReproduccion r: listas) {
+            for (ListaDeReproduccion r : listas) {
                 bw.write(r.getNombre() + "-" + r.getConteoLikes() + "-" + r.getUsuario() + "-" + r.getId());
                 bw.write("\n");
             }
@@ -288,17 +301,17 @@ public class Administrador {
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-   }
-   
-   public void writeBitacora(Usuario user){
+    }
+
+    public void writeBitacora(Usuario user) {
         try {
-            FileWriter escriba = new FileWriter(bitacora);
+            FileWriter escriba = new FileWriter(bitacora, true);
             BufferedWriter bw = new BufferedWriter(escriba);
-            bw.write(user.getUsername() + "-" );
-            if(user instanceof Oyente){
+            bw.write(user.getUsername() + "-");
+            if (user instanceof Oyente) {
                 bw.write("Oyente-");
-            }else{
-                 bw.write("Artista-");
+            } else {
+                bw.write("Artista-");
             }
             Date d = new Date();
             bw.write(d.toString());
@@ -308,6 +321,6 @@ public class Administrador {
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-   }
-           
+    }
+
 }
