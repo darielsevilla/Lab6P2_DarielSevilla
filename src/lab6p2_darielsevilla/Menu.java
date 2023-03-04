@@ -17,6 +17,7 @@ public class Menu extends javax.swing.JFrame {
 
     private Administrador administrador;
     private Usuario actual = new Artista();
+    private int modify = 0;
 
     /**
      * Creates new form Menu
@@ -45,13 +46,12 @@ public class Menu extends javax.swing.JFrame {
         mi_crudUsuarios = new javax.swing.JMenu();
         mmi_listEliminar = new javax.swing.JMenuItem();
         mmi_modificar = new javax.swing.JMenuItem();
+        mmi_Eliminar = new javax.swing.JMenuItem();
         mi_crudCanciones = new javax.swing.JMenu();
         mi_crudLanzamiento = new javax.swing.JMenu();
         mi_crudListaReproduccion = new javax.swing.JMenu();
         wd_Cliente = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jd_register = new javax.swing.JDialog();
         pn_register = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -62,13 +62,13 @@ public class Menu extends javax.swing.JFrame {
         tf_artName = new javax.swing.JTextField();
         tf_usuario = new javax.swing.JTextField();
         sp_edad = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        bt_create = new javax.swing.JButton();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jd_listar = new javax.swing.JDialog();
         pn_listar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jl_listar = new javax.swing.JList<>();
-        eliminar = new javax.swing.JButton();
+        bt_eliminar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         pn_login = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -106,7 +106,20 @@ public class Menu extends javax.swing.JFrame {
         mi_crudUsuarios.add(mmi_listEliminar);
 
         mmi_modificar.setText("modificar");
+        mmi_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmi_modificarActionPerformed(evt);
+            }
+        });
         mi_crudUsuarios.add(mmi_modificar);
+
+        mmi_Eliminar.setText("Eliminar");
+        mmi_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmi_EliminarActionPerformed(evt);
+            }
+        });
+        mi_crudUsuarios.add(mmi_Eliminar);
 
         mb_menu.add(mi_crudUsuarios);
 
@@ -158,11 +171,6 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-
-        jMenuItem1.setText("jMenuItem1");
-
         pn_register.setBackground(new java.awt.Color(0, 0, 0));
         pn_register.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -194,21 +202,21 @@ public class Menu extends javax.swing.JFrame {
         sp_edad.setValue(12);
         pn_register.add(sp_edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 0));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("crear");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_create.setBackground(new java.awt.Color(0, 204, 0));
+        bt_create.setForeground(new java.awt.Color(0, 0, 0));
+        bt_create.setText("crear");
+        bt_create.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bt_createMouseClicked(evt);
             }
         });
-        pn_register.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
+        pn_register.add(bt_create, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, -1, -1));
 
         javax.swing.GroupLayout jd_registerLayout = new javax.swing.GroupLayout(jd_register.getContentPane());
         jd_register.getContentPane().setLayout(jd_registerLayout);
         jd_registerLayout.setHorizontalGroup(
             jd_registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pn_register, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         jd_registerLayout.setVerticalGroup(
             jd_registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,15 +232,15 @@ public class Menu extends javax.swing.JFrame {
 
         pn_listar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 240, 279));
 
-        eliminar.setBackground(new java.awt.Color(255, 0, 0));
-        eliminar.setForeground(new java.awt.Color(0, 0, 0));
-        eliminar.setText("Eliminar");
-        eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_eliminar.setBackground(new java.awt.Color(255, 0, 0));
+        bt_eliminar.setForeground(new java.awt.Color(0, 0, 0));
+        bt_eliminar.setText("Eliminar");
+        bt_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                eliminarMouseClicked(evt);
+                bt_eliminarMouseClicked(evt);
             }
         });
-        pn_listar.add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, -1));
+        pn_listar.add(bt_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(0, 204, 0));
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
@@ -331,93 +339,187 @@ public class Menu extends javax.swing.JFrame {
         if (cont == 0) {
             JOptionPane.showMessageDialog(this, "Usuario no encontrado");
         }
-        if(worked){
-            if(actual instanceof Oyente){
+        if (worked) {
+            if (actual instanceof Oyente) {
                 iniciarVentanaCliente();
+            } else {
+                iniciarVentanaArtista();
             }
         }
     }                                      
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
+    private void bt_createMouseClicked(java.awt.event.MouseEvent evt) {                                       
         int x = 0;
+        System.out.println(x);
         for (Usuario u : administrador.getUsuarios()) {
-            if (u.getUsername().equals(tf_usuario.getText())) {
+            if (u.getUsername().equals(tf_usuario.getText()) && !u.equals(actual)) {
                 x++;
+                
                 break;
             }
         }
+        
         if (x == 0) {
-            if (!tf_artName.getText().equals("")) {
-                try {
-                    Artista temp = new Artista(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()), tf_artName.getText());
-                    administrador.getUsuarios().add(temp);
-                    administrador.writeUsuarios();
-                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
-                    jd_register.setVisible(false);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+            if (modify == 0) {
+                if (!tf_artName.getText().equals("")) {
+                    try {
+
+                        Artista temp = new Artista(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()), tf_artName.getText());
+                        administrador.getUsuarios().add(temp);
+                        administrador.writeUsuarios();
+                        JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
+                        jd_register.setVisible(false);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                    }
+                } else {
+                    try {
+                        Oyente temp = new Oyente(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()));
+                        administrador.getUsuarios().add(temp);
+                        administrador.writeUsuarios();
+                        JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
+                        jd_register.setVisible(false);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                    }
                 }
-            } else {
-                try {
-                    Oyente temp = new Oyente(tf_usuario.getText(), tf_pass.getText(), ((int) sp_edad.getValue()));
-                    administrador.getUsuarios().add(temp);
-                    administrador.writeUsuarios();
-                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
-                    jd_register.setVisible(false);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+
+            } else if (modify == 1) {
+                if (actual instanceof Artista) {
+                    try {
+
+                        actual.setUsername(tf_usuario.getText());
+                        actual.setPassword(tf_pass.getText());
+                        actual.setEdad(((int) sp_edad.getValue()));
+
+                        ((Artista) actual).setEdad(((int) sp_edad.getValue()));
+
+                        administrador.writeUsuarios();
+                        JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
+                        modify--;
+                        jd_register.setVisible(false);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                    }
+                } else {
+                    try {
+                        actual.setUsername(tf_usuario.getText());
+                        actual.setPassword(tf_pass.getText());
+                        actual.setEdad(((int) sp_edad.getValue()));
+
+                        administrador.writeUsuarios();
+                        JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
+                        modify--;
+                        jd_register.setVisible(false);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(jd_register, "edad incorrecta");
+                    }
                 }
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Nombre Repetido");
         }
-    }                                     
+    }                                      
 
     private void bt_logInMouseClicked(java.awt.event.MouseEvent evt) {                                      
         iniciarJd_register();
     }                                     
 
     private void mmi_listEliminarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-       DefaultListModel m = (DefaultListModel) jl_listar.getModel();
+        DefaultListModel m = (DefaultListModel) jl_listar.getModel();
         for (Usuario a : administrador.getUsuarios()) {
             m.addElement(a);
         }
+        iniciarjd_listar();
     }                                                
 
-    private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        if(jl_listar.getSelectedIndex() != -1){
-            
-        }     
+    private void bt_eliminarMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        if (jl_listar.getSelectedIndex() != -1) {
+
+        }
         this.setVisible(true);
-    }                                     
+    }                                        
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
     }                                     
 
+    private void mmi_EliminarActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        int x = JOptionPane.showConfirmDialog(jd_listar, "Desea Eliminar este usuario?");
+
+        if (x == JOptionPane.YES_OPTION) {
+            administrador.getUsuarios().remove(actual);
+            administrador.writeUsuarios();
+            jd_listar.setVisible(false);
+            wd_Cliente.setVisible(false);
+            wd_Artista.setVisible(false);
+            this.setVisible(true);
+
+        }
+
+
+    }                                            
+
+    private void mmi_modificarActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        modify++;
+        iniciarJd_register();
+    }                                             
+
+    public void iniciarVentanaArtista() {
+        wd_Artista.pack();
+        this.setVisible(false);
+        wd_Artista.setLocationRelativeTo(null);
+        wd_Artista.setVisible(true);
+    }
+
     public void iniciarJd_register() {
+
+        tf_artName.setEnabled(true);
         jd_register.pack();
-        tf_usuario.setText("");
-        tf_pass.setText("");
-        tf_artName.setText(null);
-        sp_edad.setValue(12);
+        if (modify == 0) {
+
+            tf_usuario.setText("");
+            tf_pass.setText("");
+            tf_artName.setText("");
+            sp_edad.setValue(12);
+        } else {
+            tf_usuario.setText(actual.getUsername());
+            tf_pass.setText(actual.getPassword());
+
+            sp_edad.setValue(actual.getEdad());
+            bt_create.setText("modificar");
+            if (actual instanceof Oyente) {
+                tf_artName.setEnabled(false);
+            } else {
+                tf_artName.setText(((Artista) actual).getNombreArtistico());
+            }
+        }
         jd_register.setModal(true);
         jd_register.setLocationRelativeTo(this);
         jd_register.setVisible(true);
     }
 
-    public void iniciar jd_listar(){
-        
+    public void iniciarjd_listar() {
+        jd_listar.pack();
+        if (wd_Cliente.isVisible()) {
+            jd_listar.setLocationRelativeTo(wd_Cliente);
+        } else if (wd_Artista.isVisible()) {
+            jd_listar.setLocationRelativeTo(wd_Artista);
+        }
+        bt_eliminar.setVisible(false);
+        jd_listar.setModal(true);
+        jd_listar.setVisible(true);
     }
-    public void iniciarVentanaCliente(){
+
+    public void iniciarVentanaCliente() {
         wd_Cliente.setJMenuBar(mb_menu);
         wd_Cliente.pack();
         this.setVisible(false);
         wd_Cliente.setLocationRelativeTo(null);
         wd_Cliente.setVisible(true);
-        
+
     }
+
     /**
      * @param args the command line arguments
      */
@@ -454,10 +556,10 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    private javax.swing.JButton bt_create;
+    private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_logIn;
     private javax.swing.JButton bt_logIn1;
-    private javax.swing.JButton eliminar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -465,9 +567,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jTree1;
@@ -481,6 +581,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu mi_crudLanzamiento;
     private javax.swing.JMenu mi_crudListaReproduccion;
     private javax.swing.JMenu mi_crudUsuarios;
+    private javax.swing.JMenuItem mmi_Eliminar;
     private javax.swing.JMenuItem mmi_listEliminar;
     private javax.swing.JMenuItem mmi_modificar;
     private javax.swing.JPasswordField pf_password;
